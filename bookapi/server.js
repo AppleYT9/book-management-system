@@ -7,13 +7,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-/* MongoDB Connection */
-
-mongoose.connect("mongodb://127.0.0.1:27017/Books")
+mongoose.connect("mongodb+srv://username:password@cluster.mongodb.net/Books")
 .then(() => console.log("MongoDB Connected"))
 .catch(err => console.log(err));
-
-/* Schema */
 
 const BookSchema = new mongoose.Schema({
   bookName: String,
@@ -23,13 +19,9 @@ const BookSchema = new mongoose.Schema({
 
 const Book = mongoose.model("types", BookSchema);
 
-/* HOME ROUTE */
-
 app.get("/", (req,res)=>{
   res.send("Book API running");
 });
-
-/* CREATE */
 
 app.post("/books", async(req,res)=>{
   try{
@@ -42,8 +34,6 @@ app.post("/books", async(req,res)=>{
   }
 });
 
-/* READ */
-
 app.get("/books", async(req,res)=>{
   try{
     const books = await Book.find();
@@ -54,8 +44,6 @@ app.get("/books", async(req,res)=>{
   }
 });
 
-/* UPDATE */
-
 app.put("/books/:id", async(req,res)=>{
   try{
     const updatedBook = await Book.findByIdAndUpdate(
@@ -63,15 +51,12 @@ app.put("/books/:id", async(req,res)=>{
       req.body,
       { new:true }
     );
-
     res.json(updatedBook);
   }
   catch(error){
     res.status(500).json({message:error.message});
   }
 });
-
-/* DELETE */
 
 app.delete("/books/:id", async(req,res)=>{
   try{
@@ -83,6 +68,8 @@ app.delete("/books/:id", async(req,res)=>{
   }
 });
 
-app.listen(3000, ()=>{
-  console.log("Server running on port 3000");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, ()=>{
+  console.log(`Server running on port ${PORT}`);
 });
