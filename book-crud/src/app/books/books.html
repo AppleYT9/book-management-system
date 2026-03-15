@@ -1,0 +1,92 @@
+<div class="glass-card">
+  <div class="form-header">
+    <h2><i class="fa-solid fa-plus-circle"></i> Add New Book</h2>
+    <p>Enter details to expand your collection</p>
+  </div>
+
+  <div class="form-grid">
+    <div class="input-group">
+      <label for="bookName">Book Title</label>
+      <input
+        type="text"
+        id="bookName"
+        name="bookName"
+        [(ngModel)]="bookName"
+        placeholder="e.g. The Great Gatsby">
+    </div>
+
+    <div class="input-group">
+      <label for="author">Author Name</label>
+      <input
+        type="text"
+        id="author"
+        name="author"
+        [(ngModel)]="author"
+        placeholder="e.g. F. Scott Fitzgerald">
+    </div>
+
+    <div class="input-group">
+      <label for="price">Price ($)</label>
+      <input
+        type="number"
+        id="price"
+        name="price"
+        [(ngModel)]="price"
+        placeholder="0.00">
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: center;">
+    <button class="btn-primary" (click)="addBook()">
+      <i class="fa-solid fa-cloud-arrow-up"></i>
+      Add to Library
+    </button>
+  </div>
+</div>
+
+<div class="glass-card">
+  <div class="form-header">
+    <h2 style="background: linear-gradient(to right, #6366f1, #ec4899); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+      <i class="fa-solid fa-list-ul"></i> Your Library
+    </h2>
+  </div>
+
+  <div class="table-container" *ngIf="books.length > 0; else emptyState">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Book Details</th>
+          <th>Author</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let b of books; let i = index">
+          <td style="color: var(--text-muted); font-weight: 500;">{{i+1}}</td>
+          <td>
+            <div class="book-title">{{b.bookName}}</div>
+          </td>
+          <td style="color: var(--text-muted);">{{b.author}}</td>
+          <td>
+            <span class="badge-price">${{b.price}}</span>
+          </td>
+          <td>
+            <button class="btn-delete" (click)="deleteBook(b._id)">
+              <i class="fa-solid fa-trash-can"></i>
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <i class="fa-solid fa-book-open"></i>
+      <p>Your library is currently empty. Start adding some books!</p>
+    </div>
+  </ng-template>
+</div>
