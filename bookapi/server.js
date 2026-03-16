@@ -7,8 +7,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect("mongodb+srv://username:password@cluster.mongodb.net/Books")
-.then(() => console.log("MongoDB Connected"))
+mongoose.connect("mongodb://127.0.0.1:27017/Books")
+.then(() => console.log("Connected to MongoDB: Books"))
 .catch(err => console.log(err));
 
 const BookSchema = new mongoose.Schema({
@@ -68,7 +68,7 @@ app.delete("/books/:id", async(req,res)=>{
   }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, ()=>{
   console.log(`Server running on port ${PORT}`);
