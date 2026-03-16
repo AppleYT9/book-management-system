@@ -17,6 +17,9 @@ export class BooksComponent implements OnInit {
   author:string="";
   price:number | null=null;
 
+  id:any=null;
+  isEditMode:boolean=false;
+
   constructor(private service:BookService){}
 
   ngOnInit(){
@@ -45,11 +48,47 @@ export class BooksComponent implements OnInit {
     this.service.addBook(book).subscribe(()=>{
       this.loadBooks();
 
-      this.bookName="";
-      this.author="";
-      this.price=null;
+      this.resetForm();
     });
 
+  }
+
+  editBook(book:any){
+    this.id = book._id;
+    this.bookName = book.bookName;
+    this.author = book.author;
+    this.price = book.price;
+    this.isEditMode = true;
+  }
+
+  cancelEdit(){
+    this.resetForm();
+  }
+
+  saveEdit(){
+    if (!this.bookName.trim() || !this.author.trim() || this.price == null) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    const book={
+      bookName:this.bookName,
+      author:this.author,
+      price:this.price
+    };
+
+    this.service.updateBook(this.id, book).subscribe(()=>{
+      this.loadBooks();
+      this.resetForm();
+    });
+  }
+
+  resetForm(){
+    this.id = null;
+    this.bookName = "";
+    this.author = "";
+    this.price = null;
+    this.isEditMode = false;
   }
 
   deleteBook(id:any){

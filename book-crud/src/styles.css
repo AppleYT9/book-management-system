@@ -199,6 +199,24 @@ tr:last-child td {
   color: #b91c1c;
 }
 
+.btn-edit {
+  background: #e0e7ff;
+  color: #4338ca;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-edit:hover {
+  background: #c7d2fe;
+  color: #3730a3;
+}
+
 /* Empty State */
 .empty-state {
   text-align: center;

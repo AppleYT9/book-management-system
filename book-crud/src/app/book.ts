@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class BookService {
 
-  api="http://localhost:3000/books";
+  api="http://localhost:3001/books";
 
   constructor(private http:HttpClient){}
 
@@ -20,6 +20,10 @@ export class BookService {
 
   deleteBook(id:any){
     return this.http.delete(this.api+"/"+id);
+  }
+
+  updateBook(id:any, data:any){
+    return this.http.put(this.api+"/"+id, data);
   }
 
 }
